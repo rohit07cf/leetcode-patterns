@@ -105,22 +105,63 @@ def binary_search_on_answer(lo, hi, check):
 
 ---
 
-## Practice Problems (from Excel)
+## Curated Problem Sets (10 per subpattern)
 
-| Problem | Subpattern | Status | Notes |
-|---------|-----------|--------|-------|
-| Binary Search | Classic | | |
-| Search Insert Position | Classic | | |
-| First Bad Version | Boundary (First/Last) | | |
-| Find First and Last Position | Boundary (First/Last) | | |
-| Lower Bound / Upper Bound | Boundary (First/Last) | | |
-| Search in Rotated Sorted Array | Modified (Rotated) | | |
-| Find Minimum in Rotated Sorted Array | Modified (Rotated) | | |
-| Peak Element | Modified (Rotated) | | |
-| Koko Eating Bananas | Binary Search on Answer | | |
-| Capacity to Ship Packages | Binary Search on Answer | | |
-| Minimum Speed to Arrive on Time | Binary Search on Answer | | |
-| Split Array Largest Sum | Binary Search on Answer | | |
+### Classic Binary Search
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Binary Search (704) | Easy | `classic_binary_search/problem_01_binary_search.md` |
+| 2 | Search Insert Position (35) | Easy | `classic_binary_search/problem_02_search_insert_position.md` |
+| 3 | Guess Number (374) | Easy | `classic_binary_search/problem_03_guess_number.md` |
+| 4 | First Bad Version (278) | Easy | `classic_binary_search/problem_04_first_bad_version.md` |
+| 5 | Search a 2D Matrix (74) | Medium | `classic_binary_search/problem_05_search_2d_matrix.md` |
+| 6 | Sqrt(x) (69) | Easy | `classic_binary_search/problem_06_sqrt_x.md` |
+| 7 | Valid Perfect Square (367) | Easy | `classic_binary_search/problem_07_valid_perfect_square.md` |
+| 8 | Find Peak Element (162) | Medium | `classic_binary_search/problem_08_find_peak_element.md` |
+| 9 | Peak Index in Mountain (852) | Medium | `classic_binary_search/problem_09_peak_index_mountain.md` |
+| 10 | Count Negative Numbers (1351) | Easy | `classic_binary_search/problem_10_count_negative_numbers.md` |
+
+### Boundary Binary Search
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | First and Last Position (34) | Medium | `boundary_binary_search/problem_01_first_and_last_position.md` |
+| 2 | Smallest Letter Greater (744) | Easy | `boundary_binary_search/problem_02_smallest_letter_greater.md` |
+| 3 | H-Index II (275) | Medium | `boundary_binary_search/problem_03_h_index_ii.md` |
+| 4 | Single Element in Sorted (540) | Medium | `boundary_binary_search/problem_04_single_element_sorted.md` |
+| 5 | Arranging Coins (441) | Easy | `boundary_binary_search/problem_05_arranging_coins.md` |
+| 6 | Kth Missing Positive (1539) | Easy | `boundary_binary_search/problem_06_kth_missing_positive.md` |
+| 7 | Special Array (1608) | Easy | `boundary_binary_search/problem_07_special_array.md` |
+| 8 | Count Negative Numbers (1351) | Easy | `boundary_binary_search/problem_08_count_negative_numbers.md` |
+| 9 | Plates Between Candles (2055) | Medium | `boundary_binary_search/problem_09_plates_between_candles.md` |
+| 10 | Find Target Indices (2089) | Easy | `boundary_binary_search/problem_10_find_target_indices.md` |
+
+### Binary Search on Answer
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Koko Eating Bananas (875) | Medium | `binary_search_on_answer/problem_01_koko_eating_bananas.md` |
+| 2 | Capacity To Ship (1011) | Medium | `binary_search_on_answer/problem_02_capacity_to_ship.md` |
+| 3 | Split Array Largest Sum (410) | Hard | `binary_search_on_answer/problem_03_split_array_largest_sum.md` |
+| 4 | Minimum Days Bouquets (1482) | Medium | `binary_search_on_answer/problem_04_minimum_days_bouquets.md` |
+| 5 | Magnetic Force (1552) | Medium | `binary_search_on_answer/problem_05_magnetic_force.md` |
+| 6 | Smallest Divisor (1283) | Medium | `binary_search_on_answer/problem_06_smallest_divisor.md` |
+| 7 | Max Candies Allocated (2226) | Medium | `binary_search_on_answer/problem_07_max_candies_allocated.md` |
+| 8 | Minimum Time Trips (2187) | Medium | `binary_search_on_answer/problem_08_minimum_time_trips.md` |
+| 9 | Minimize Max Distance (774) | Hard | `binary_search_on_answer/problem_09_minimize_max_distance.md` |
+| 10 | Cutting Ribbons (1891) | Medium | `binary_search_on_answer/problem_10_cutting_ribbons.md` |
+
+### Modified Binary Search — Rotated Arrays
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Search in Rotated Sorted (33) | Medium | `modified_binary_search_rotated/problem_01_search_rotated_sorted.md` |
+| 2 | Search in Rotated II (81) | Medium | `modified_binary_search_rotated/problem_02_search_rotated_sorted_ii.md` |
+| 3 | Find Min Rotated (153) | Medium | `modified_binary_search_rotated/problem_03_find_min_rotated.md` |
+| 4 | Find Min Rotated II (154) | Hard | `modified_binary_search_rotated/problem_04_find_min_rotated_ii.md` |
+| 5 | Find Peak Element (162) | Medium | `modified_binary_search_rotated/problem_05_find_peak_element.md` |
+| 6 | Search Unknown Size (702) | Medium | `modified_binary_search_rotated/problem_06_search_unknown_size.md` |
+| 7 | Median of Two Sorted (4) | Hard | `modified_binary_search_rotated/problem_07_median_two_sorted.md` |
+| 8 | Find K Closest (658) | Medium | `modified_binary_search_rotated/problem_08_find_k_closest.md` |
+| 9 | Find Rotation Count | Medium | `modified_binary_search_rotated/problem_09_find_rotation_count.md` |
+| 10 | Search Nearly Sorted | Medium | `modified_binary_search_rotated/problem_10_search_nearly_sorted.md` |
 
 ---
 

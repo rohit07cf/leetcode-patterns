@@ -99,23 +99,63 @@ def variable_window(arr, condition):
 
 ---
 
-## Practice Problems (from Excel)
+## Curated Problem Sets (10 per subpattern)
 
-| Problem | Subpattern | Status | Notes |
-|---------|-----------|--------|-------|
-| Max Sum Subarray of Size K | Fixed Window | DONE | |
-| Average of Subarrays | Fixed Window | DONE | |
-| First Negative Number in Window | Fixed Window | DONE | |
-| Longest Substring Without Repeating Chars | Variable Window | DONE | |
-| Longest Repeating Character Replacement | Variable Window | | |
-| Subarray Sum <= K | Variable Window | | |
-| Longest Substring Without Repeating Chars | Sliding Window + HashMap | | |
-| Permutation in String | Sliding Window + HashMap | | |
-| Minimum Window Substring | Sliding Window + HashMap | | |
-| Count Distinct Elements in Every Window | Sliding Window + HashMap | | |
-| Minimum Window Substring | Minimum Window Pattern | | |
-| Minimum Size Subarray Sum | Minimum Window Pattern | | |
-| Shortest Subarray with Sum at Least K | Minimum Window Pattern | | |
+### Fixed Window
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Max Sum Subarray of Size K | Easy | `fixed_window/problem_01_max_sum_subarray_k.md` |
+| 2 | Maximum Average Subarray I (643) | Easy | `fixed_window/problem_02_max_average_subarray.md` |
+| 3 | Find All Anagrams (438) | Medium | `fixed_window/problem_03_find_all_anagrams.md` |
+| 4 | Permutation in String (567) | Medium | `fixed_window/problem_04_permutation_in_string.md` |
+| 5 | Max Vowels in Substring (1456) | Medium | `fixed_window/problem_05_max_vowels_in_substring.md` |
+| 6 | Repeated DNA Sequences (187) | Medium | `fixed_window/problem_06_repeated_dna_sequences.md` |
+| 7 | Sliding Window Maximum (239) | Hard | `fixed_window/problem_07_sliding_window_maximum.md` |
+| 8 | Grumpy Bookstore Owner (1052) | Medium | `fixed_window/problem_08_grumpy_bookstore_owner.md` |
+| 9 | Diet Plan Performance (1176) | Easy | `fixed_window/problem_09_diet_plan_performance.md` |
+| 10 | Min Difference K Scores (1984) | Easy | `fixed_window/problem_10_min_difference_k_scores.md` |
+
+### Variable Window
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Longest Substring No Repeat (3) | Medium | `variable_window/problem_01_longest_substring_no_repeat.md` |
+| 2 | Longest Repeating Replacement (424) | Medium | `variable_window/problem_02_longest_repeating_replacement.md` |
+| 3 | Max Consecutive Ones III (1004) | Medium | `variable_window/problem_03_max_consecutive_ones_iii.md` |
+| 4 | Min Size Subarray Sum (209) | Medium | `variable_window/problem_04_min_size_subarray_sum.md` |
+| 5 | Fruit Into Baskets (904) | Medium | `variable_window/problem_05_fruit_into_baskets.md` |
+| 6 | Subarray Product Less K (713) | Medium | `variable_window/problem_06_subarray_product_less_k.md` |
+| 7 | Longest Substring Two Distinct (159) | Medium | `variable_window/problem_07_longest_substring_two_distinct.md` |
+| 8 | Longest Turbulent Subarray (978) | Medium | `variable_window/problem_08_longest_turbulent_subarray.md` |
+| 9 | Get Equal Substrings (1208) | Medium | `variable_window/problem_09_get_equal_substrings.md` |
+| 10 | Max Consecutive Ones II (487) | Medium | `variable_window/problem_10_max_consecutive_ones_ii.md` |
+
+### Minimum Window Pattern
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Minimum Window Substring (76) | Hard | `minimum_window_pattern/problem_01_minimum_window_substring.md` |
+| 2 | Smallest Range Covering (632) | Hard | `minimum_window_pattern/problem_02_smallest_range_covering.md` |
+| 3 | Minimum Window Subsequence (727) | Hard | `minimum_window_pattern/problem_03_minimum_window_subsequence.md` |
+| 4 | Substring Concatenation (30) | Hard | `minimum_window_pattern/problem_04_substring_concatenation.md` |
+| 5 | Subarrays K Different (992) | Hard | `minimum_window_pattern/problem_05_subarrays_k_different.md` |
+| 6 | Shortest Subarray Sum K (862) | Hard | `minimum_window_pattern/problem_06_shortest_subarray_sum_k.md` |
+| 7 | Count Nice Subarrays (1248) | Medium | `minimum_window_pattern/problem_07_count_nice_subarrays.md` |
+| 8 | Min Operations Reduce X (1658) | Medium | `minimum_window_pattern/problem_08_min_operations_reduce_x.md` |
+| 9 | Max Points From Cards (1423) | Medium | `minimum_window_pattern/problem_09_max_points_from_cards.md` |
+| 10 | Min Consecutive Cards (2260) | Medium | `minimum_window_pattern/problem_10_min_consecutive_cards.md` |
+
+### Sliding Window + Hashmap
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Longest Substring No Repeat (3) | Medium | `sliding_window_hashmap/problem_01_longest_substring_no_repeat.md` |
+| 2 | Find All Anagrams (438) | Medium | `sliding_window_hashmap/problem_02_find_all_anagrams.md` |
+| 3 | Permutation in String (567) | Medium | `sliding_window_hashmap/problem_03_permutation_in_string.md` |
+| 4 | Fruit Into Baskets (904) | Medium | `sliding_window_hashmap/problem_04_fruit_into_baskets.md` |
+| 5 | Longest K Distinct (340) | Medium | `sliding_window_hashmap/problem_05_longest_k_distinct.md` |
+| 6 | Longest Repeating Replacement (424) | Medium | `sliding_window_hashmap/problem_06_longest_repeating_replacement.md` |
+| 7 | Substrings Three Chars (1358) | Medium | `sliding_window_hashmap/problem_07_substrings_three_chars.md` |
+| 8 | Max Consecutive Ones III (1004) | Medium | `sliding_window_hashmap/problem_08_max_consecutive_ones_iii.md` |
+| 9 | Minimum Window Substring (76) | Hard | `sliding_window_hashmap/problem_09_minimum_window_substring.md` |
+| 10 | Contains Duplicate II (219) | Easy | `sliding_window_hashmap/problem_10_contains_duplicate_ii.md` |
 
 ---
 

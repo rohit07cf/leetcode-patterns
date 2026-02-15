@@ -90,16 +90,35 @@ def top_k_frequent(nums, k):
 
 ---
 
-## Practice Problems (from Excel)
+## Curated Problem Sets (10 per subpattern)
 
-| Problem | Subpattern | Status | Notes |
-|---------|-----------|--------|-------|
-| Kth Largest Element in an Array | Min-Heap of Size K | | |
-| Kth Closest Point to Origin | Min-Heap of Size K | | |
-| Kth Largest Element in a Stream | Min-Heap of Size K | | |
-| Find K Closest Elements | Max-Heap for K Smallest | | |
-| Kth Smallest Element in a Sorted Matrix | Max-Heap for K Smallest | | |
-| Top K Frequent Elements | Max-Heap for K Smallest | | |
+### Min Heap of Size K
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Kth Largest Element (215) | Medium | `min_heap_size_k/problem_01_kth_largest_element.md` |
+| 2 | Top K Frequent (347) | Medium | `min_heap_size_k/problem_02_top_k_frequent.md` |
+| 3 | K Closest Points (973) | Medium | `min_heap_size_k/problem_03_k_closest_points.md` |
+| 4 | Sort Chars By Frequency (451) | Medium | `min_heap_size_k/problem_04_sort_chars_by_frequency.md` |
+| 5 | Kth Largest in Stream (703) | Easy | `min_heap_size_k/problem_05_kth_largest_stream.md` |
+| 6 | Last Stone Weight (1046) | Easy | `min_heap_size_k/problem_06_last_stone_weight.md` |
+| 7 | Find K Pairs Smallest Sums (373) | Medium | `min_heap_size_k/problem_07_find_k_pairs_smallest_sums.md` |
+| 8 | Kth Smallest Sorted Matrix (378) | Medium | `min_heap_size_k/problem_08_kth_smallest_sorted_matrix.md` |
+| 9 | Reorganize String (767) | Medium | `min_heap_size_k/problem_09_reorganize_string.md` |
+| 10 | Task Scheduler (621) | Medium | `min_heap_size_k/problem_10_task_scheduler.md` |
+
+### Max Heap for K Smallest
+| # | Problem | Difficulty | File |
+|---|---------|-----------|------|
+| 1 | Kth Smallest in BST (230) | Medium | `max_heap_k_smallest/problem_01_kth_smallest_bst.md` |
+| 2 | K-th Smallest Pair Distance (719) | Hard | `max_heap_k_smallest/problem_02_kth_smallest_pair_distance.md` |
+| 3 | Find Median Data Stream (295) | Hard | `max_heap_k_smallest/problem_03_find_median_data_stream.md` |
+| 4 | Merge k Sorted Lists (23) | Hard | `max_heap_k_smallest/problem_04_merge_k_sorted_lists.md` |
+| 5 | Ugly Number II (264) | Medium | `max_heap_k_smallest/problem_05_ugly_number_ii.md` |
+| 6 | Super Ugly Number (313) | Medium | `max_heap_k_smallest/problem_06_super_ugly_number.md` |
+| 7 | Smallest Range Covering (632) | Hard | `max_heap_k_smallest/problem_07_smallest_range_covering.md` |
+| 8 | K-th Smallest Prime Fraction (786) | Medium | `max_heap_k_smallest/problem_08_kth_smallest_prime_fraction.md` |
+| 9 | Meeting Rooms II (253) | Medium | `max_heap_k_smallest/problem_09_meeting_rooms_ii.md` |
+| 10 | Furthest Building (1642) | Medium | `max_heap_k_smallest/problem_10_furthest_building.md` |
 
 ---
 
