@@ -1,83 +1,71 @@
-# Tree DP Introduction
+# Tree DP — Dynamic Programming on Trees
 
 ## Baby Explanation (ELI10)
 
-- Tree DP = computing answers by going from leaves UP to the root
-- Think of it like a company: each employee reports a number to their boss
-- The boss combines the numbers from their direct reports
-- The CEO (root) has the final answer
-- It's just DFS where you USE the values returned by children
-- If you can do tree DFS, you can do tree DP — it's the same thing with a purpose
+- **Tree DP** is when you compute an answer at each node by combining answers from its children. Think of it like a company: each manager asks their employees for a report, combines the reports, and sends the result UP to their boss.
+- It is called "DP" because we compute and REUSE smaller results (subtree answers) to build bigger results (whole tree answer).
+- The information always flows UPWARD: leaves compute first, then their parents, then THEIR parents, all the way up to the root. This is just postorder DFS!
+- Tree DP is the pattern behind many classic interview problems: diameter of a tree, maximum path sum, longest path, house robber on a tree.
+- The trick is that sometimes the answer to the PROBLEM is NOT the same as what the FUNCTION returns. You often need a global variable to track the best answer seen so far.
+- If you can do postorder DFS, you can do Tree DP. They are the same thing with a purpose.
 
 ---
 
 ## Pattern Recognition
 
-✅ Use this when you see:
-- "Diameter of tree"
-- "Maximum path sum"
-- "Longest path"
-- "Height" or "depth" problems
-- Any problem where you need to combine info from subtrees
-- "Rob houses arranged in a tree"
+**Use Tree DP when you see:**
+- "Find the diameter / longest path in a tree"
+- "Find the maximum path sum"
+- "Choose nodes with constraints" (like house robber)
+- "Compute some property of all subtrees"
+- Anything where you need bottom-up computation + combining children's results
 
-❌ Avoid when:
-- You need level-by-level processing → use BFS
-- The problem doesn't involve combining subtree results
-
----
-
-## The Key Insight
-
-Regular DFS: visit every node, do something.
-
-Tree DP: at each node, **combine results from children** to compute something.
-
-```
-Regular DFS:    "Visit node, go left, go right"
-Tree DP:        "Go left, go right, COMBINE results at current node"
-```
-
-This means tree DP is almost always **POSTORDER** — you process children first.
+**Avoid when:**
+- The problem is top-down only (just use preorder DFS with parameter passing)
+- The problem is about levels (use BFS)
+- The problem does not involve combining subtree information
 
 ---
 
-## The Universal Tree DP Template
+## The Core Pattern
+
+Every Tree DP problem follows this structure:
 
 ```python
-def solve(root):
-    best = [0]  # global answer (use list so inner function can modify)
+def treeDPProblem(root):
+    best_answer = [initial_value]    # Global tracker
 
     def dfs(node):
-        # Base case: empty node
         if not node:
-            return 0
+            return BASE_VALUE
 
-        # Step 1: Get answers from children (POSTORDER)
-        left = dfs(node.left)
-        right = dfs(node.right)
+        left_info = dfs(node.left)     # Get info from left subtree
+        right_info = dfs(node.right)   # Get info from right subtree
 
-        # Step 2: Update global answer using BOTH subtrees
-        # (this is the "path through current node" calculation)
-        best[0] = max(best[0], left + right + node.val)
+        # UPDATE GLOBAL ANSWER (this might use both left + right)
+        best_answer[0] = max(best_answer[0],
+                             COMBINE(left_info, right_info, node))
 
-        # Step 3: Return info about THIS subtree to parent
-        # (parent can only use ONE path — left OR right)
-        return max(left, right) + node.val
+        # RETURN INFO UPWARD (can only go through ONE child, not both)
+        return WHAT_PARENT_NEEDS(left_info, right_info, node)
 
     dfs(root)
-    return best[0]
+    return best_answer[0]
 ```
 
-**The two key questions:**
-1. What do I **update globally**? (uses both left and right)
+**THE KEY INSIGHT:** The global answer and the return value are DIFFERENT things!
+- The global answer considers paths that go through the current node (using BOTH children).
+- The return value goes to the parent and can only use ONE child (because a path cannot fork).
+
+**The two key questions for every Tree DP problem:**
+1. What do I **update globally**? (can use both left and right)
 2. What do I **return to parent**? (can only pick one direction)
 
 ---
 
-## Classic Example: Diameter of Binary Tree
+## Classic Problem 1: Diameter of Binary Tree (LeetCode 543)
 
-**Problem:** Find the longest path between any two nodes (in edges).
+The **diameter** is the longest path between ANY two nodes (counted in edges). This path may or may not go through the root.
 
 ```
         1
@@ -86,52 +74,33 @@ def solve(root):
      / \
     4   5
 
-Diameter = 3 (path: 4 → 2 → 1 → 3)
+Diameter = 3 (path: 4 -> 2 -> 1 -> 3, or 5 -> 2 -> 1 -> 3)
 ```
 
-### Why This Is Tree DP
+### Why is this Tree DP?
 
-At each node, the longest path THROUGH that node = left_height + right_height.
-
-The diameter is the maximum of all such paths.
-
-### Step-by-Step Walkthrough
+At each node, the longest path THROUGH this node = left_height + right_height.
+But the answer we return to the parent is just the height (1 + max(left, right)), because you can only go up through ONE side.
 
 ```
-Start at node 1
-  → Go left to node 2
-    → Go left to node 4
-      → Go left: None → return 0
-      → Go right: None → return 0
-      → Update best: max(0, 0+0) = 0
-      → Return to parent: max(0, 0) + 1 = 1
-    → Go right to node 5
-      → Go left: None → return 0
-      → Go right: None → return 0
-      → Update best: max(0, 0+0) = 0
-      → Return to parent: max(0, 0) + 1 = 1
-    → Back at node 2:
-      → left_height = 1, right_height = 1
-      → Update best: max(0, 1+1) = 2
-      → Return to parent: max(1, 1) + 1 = 2
-  → Go right to node 3
-    → Go left: None → return 0
-    → Go right: None → return 0
-    → Update best: max(2, 0+0) = 2
-    → Return to parent: max(0, 0) + 1 = 1
-  → Back at node 1:
-    → left_height = 2, right_height = 1
-    → Update best: max(2, 2+1) = 3  ← THIS IS THE DIAMETER
-    → Return: max(2, 1) + 1 = 3
+At node 2:
+  left_height = 1 (from node 4)
+  right_height = 1 (from node 5)
+  Path through node 2 = 1 + 1 = 2  (4 -> 2 -> 5)
+  Return to parent: 1 + max(1, 1) = 2  (height)
 
-Answer: 3
+At node 1:
+  left_height = 2 (from node 2)
+  right_height = 1 (from node 3)
+  Path through node 1 = 2 + 1 = 3  (this IS the diameter)
+  Return: 1 + max(2, 1) = 3
 ```
 
-### Code
+### The Code:
 
 ```python
-def diameter_of_binary_tree(root):
-    best = [0]
+def diameterOfBinaryTree(root):
+    diameter = [0]
 
     def height(node):
         if not node:
@@ -140,63 +109,173 @@ def diameter_of_binary_tree(root):
         left_h = height(node.left)
         right_h = height(node.right)
 
-        # Path through this node
-        best[0] = max(best[0], left_h + right_h)
+        # Update diameter: path through this node
+        diameter[0] = max(diameter[0], left_h + right_h)
 
-        # Return height of this subtree
-        return max(left_h, right_h) + 1
+        # Return height to parent
+        return 1 + max(left_h, right_h)
 
     height(root)
-    return best[0]
+    return diameter[0]
+```
+
+### Full Trace:
+```
+        1
+       / \
+      2   3
+     / \
+    4   5
+
+height(4):
+  left=0, right=0
+  diameter = max(0, 0+0) = 0
+  return 1 + max(0,0) = 1
+
+height(5):
+  left=0, right=0
+  diameter = max(0, 0+0) = 0
+  return 1 + max(0,0) = 1
+
+height(2):
+  left=1, right=1
+  diameter = max(0, 1+1) = 2         <-- path: 4->2->5
+  return 1 + max(1,1) = 2
+
+height(3):
+  left=0, right=0
+  diameter = max(2, 0+0) = 2
+  return 1 + max(0,0) = 1
+
+height(1):
+  left=2, right=1
+  diameter = max(2, 2+1) = 3         <-- path: 4->2->1->3  THE ANSWER!
+  return 1 + max(2,1) = 3
+
+Final diameter = 3
 ```
 
 ---
 
-## Classic Example: Maximum Path Sum
+## How Info Flows Up — Visualized
 
-**Problem:** Find the maximum sum path between any two nodes.
+```
+        1           height(1) returns 3
+       / \          diameter updated to 3 here
+      2   3         height(2) returns 2       height(3) returns 1
+     / \            diameter updated to 2 here
+    4   5           height(4) returns 1       height(5) returns 1
+
+Info flows UPWARD like bubbles rising in water:
+
+    Step 1: Leaves compute (height = 1 each)
+    Step 2: Node 2 combines left=1, right=1 -> returns height 2
+    Step 3: Root combines left=2, right=1 -> returns height 3
+
+    At each step, we also check: "Is the path THROUGH me the longest so far?"
+```
+
+---
+
+## Why the Diameter Might NOT Go Through the Root
+
+This is the key reason we need a global variable:
+
+```
+        1
+       /
+      2
+     / \
+    3   4
+   /     \
+  5       6
+
+Diameter = 4 (path: 5 -> 3 -> 2 -> 4 -> 6)
+This path goes through node 2, NOT through root 1!
+
+If we only returned the answer from the root, we would miss this.
+The global variable catches it when we process node 2.
+```
+
+---
+
+## Classic Problem 2: Maximum Path Sum (LeetCode 124)
+
+Find the path with the largest sum. The path can start and end at ANY node.
 
 ```
        -10
        / \
       9   20
          / \
-        15   7
+        15  7
 
-Max path = 15 + 20 + 7 = 42
+Maximum path: 15 -> 20 -> 7 = 42
 ```
 
-### Code
+This is just like diameter, but instead of counting edges, we sum values.
 
 ```python
-def max_path_sum(root):
-    best = [float('-inf')]
+def maxPathSum(root):
+    max_sum = [float('-inf')]
 
     def dfs(node):
         if not node:
             return 0
 
-        # Only take positive contributions
-        left = max(0, dfs(node.left))
-        right = max(0, dfs(node.right))
+        # Only take positive contributions from children
+        left_gain = max(dfs(node.left), 0)     # Ignore if negative!
+        right_gain = max(dfs(node.right), 0)
 
-        # Path through this node (uses both sides)
-        best[0] = max(best[0], left + right + node.val)
+        # Path through current node (using both children)
+        path_sum = node.val + left_gain + right_gain
+        max_sum[0] = max(max_sum[0], path_sum)
 
-        # Return best single path to parent
-        return max(left, right) + node.val
+        # Return max gain through ONE child (for parent's use)
+        return node.val + max(left_gain, right_gain)
 
     dfs(root)
-    return best[0]
+    return max_sum[0]
 ```
 
-**Key trick:** `max(0, dfs(...))` — if a subtree sum is negative, don't include it!
+### Trace:
+```
+       -10
+       / \
+      9   20
+         / \
+        15  7
+
+dfs(9):   left=0, right=0
+          path = 9+0+0 = 9          max_sum = 9
+          return 9+max(0,0) = 9
+
+dfs(15):  left=0, right=0
+          path = 15+0+0 = 15        max_sum = 15
+          return 15
+
+dfs(7):   left=0, right=0
+          path = 7+0+0 = 7          max_sum = 15
+          return 7
+
+dfs(20):  left_gain=15, right_gain=7
+          path = 20+15+7 = 42       max_sum = 42  <-- THE ANSWER!
+          return 20+max(15,7) = 35
+
+dfs(-10): left_gain=max(9,0)=9, right_gain=max(35,0)=35
+          path = -10+9+35 = 34      max_sum stays 42
+          return -10+max(9,35) = 25
+
+Answer: 42  (path: 15 -> 20 -> 7)
+```
+
+**Key trick:** `max(dfs(child), 0)` means "if this child's path has negative sum, do not include it." You always have the option of not extending into a subtree.
 
 ---
 
-## House Robber III (DP with Two States)
+## Classic Problem 3: House Robber III (LeetCode 337)
 
-**Problem:** Rob houses on a tree. Can't rob two directly connected nodes.
+A thief robs houses arranged in a tree. Cannot rob two directly-connected houses. Find max money.
 
 ```
         3
@@ -205,16 +284,14 @@ def max_path_sum(root):
        \   \
         3   1
 
-Rob 3 + 3 + 1 = 7
+Option A: Rob 3 (root) + 3 (left grandchild) + 1 (right grandchild) = 7
+Option B: Rob 2 + 3 (right child) = 5
+Answer: 7
 ```
 
-### The DP Idea
-
 At each node, two choices:
-- **Rob this node:** can't rob children. Take node.val + grandchildren values.
-- **Skip this node:** take the best from children (they can be robbed or not).
-
-### Code
+- **Rob this node:** take its value + results from grandchildren (children must be skipped)
+- **Skip this node:** take the best results from children (each child can be robbed or skipped)
 
 ```python
 def rob(root):
@@ -223,21 +300,50 @@ def rob(root):
         if not node:
             return (0, 0)
 
-        left = dfs(node.left)
-        right = dfs(node.right)
+        left_rob, left_skip = dfs(node.left)
+        right_rob, right_skip = dfs(node.right)
 
-        # Rob this node: can't rob children
-        rob_it = node.val + left[1] + right[1]
+        # If we rob this node, children must be skipped
+        rob_this = node.val + left_skip + right_skip
 
-        # Skip this node: take best of children
-        skip_it = max(left) + max(right)
+        # If we skip this node, take the best from each child
+        skip_this = max(left_rob, left_skip) + max(right_rob, right_skip)
 
-        return (rob_it, skip_it)
+        return (rob_this, skip_this)
 
     return max(dfs(root))
 ```
 
-**Key pattern:** Return a TUPLE of values (multiple states per node).
+This is the "return a tuple" trick -- the function returns multiple pieces of info.
+
+### Trace:
+```
+        3
+       / \
+      2   3
+       \   \
+        3   1
+
+dfs(3, left-grandchild):  return (3, 0)
+dfs(2):   left=(0,0), right=(3,0)
+          rob = 2 + 0 + 0 = 2
+          skip = max(0,0) + max(3,0) = 3
+          return (2, 3)
+
+dfs(1):   left=(0,0), right=(0,0)
+          return (1, 0)
+dfs(3, right-child): left=(0,0), right=(1,0)
+          rob = 3 + 0 + 0 = 3
+          skip = 0 + max(1,0) = 1
+          return (3, 1)
+
+dfs(3, root): left=(2,3), right=(3,1)
+          rob = 3 + 3 + 1 = 7          <-- rob root + skip both children
+          skip = max(2,3) + max(3,1) = 3 + 3 = 6
+          return (7, 6)
+
+Answer: max(7, 6) = 7
+```
 
 ---
 
@@ -245,72 +351,130 @@ def rob(root):
 
 | Flavor | What You Return | Global Variable? | Example |
 |--------|----------------|-------------------|---------|
-| Single value + global | One number (e.g., height) | Yes — tracks the real answer | Diameter, Max Path Sum |
-| Tuple (no global) | Multiple values (e.g., rob/skip) | No — answer is at root | House Robber III |
+| Single value + global | One number (height, gain) | Yes -- tracks the real answer | Diameter, Max Path Sum |
+| Tuple (no global) | Multiple values (rob/skip) | No -- answer is max of tuple at root | House Robber III |
+
+**Flavor 1** is used when the optimal answer might pass through any node, not just the root.
+**Flavor 2** is used when the state at each node has multiple options.
 
 ---
 
-## How Info Flows in Tree DP
+## How Tree DP Differs From Regular DP
+
+| Regular DP | Tree DP |
+|-----------|---------|
+| Linear structure (array) | Tree structure |
+| Fill table left to right | Fill bottom to top (postorder) |
+| dp[i] depends on dp[i-1] | dp[node] depends on dp[children] |
+| Iterative loop | Recursive DFS |
+| Explicit dp array | Return values + global variable |
+| State is index | State is a node |
+
+---
+
+## Classic Problem 4: Longest Univalue Path (LeetCode 687)
+
+Find the longest path where all nodes have the same value.
 
 ```
-        ROOT
-       /    \
-     LEFT   RIGHT
-     / \     / \
-    .   .   .   .
+        5
+       / \
+      4   5
+     / \   \
+    1   1   5
 
-Info flows UP:
-   Leaves compute simple values
-   Parents combine children's values
-   Root has the final answer
+Longest univalue path = 2 (5 -> 5 -> 5 on the right side)
+```
 
-        ROOT  ← final answer here
-       ↑    ↑
-     LEFT   RIGHT
-     ↑  ↑   ↑  ↑
-    .   .   .   .   ← start from leaves
+```python
+def longestUnivaluePath(root):
+    longest = [0]
+
+    def dfs(node):
+        if not node:
+            return 0
+
+        left_len = dfs(node.left)
+        right_len = dfs(node.right)
+
+        # Extend left path only if values match
+        left_arrow = left_len + 1 if node.left and node.left.val == node.val else 0
+        # Extend right path only if values match
+        right_arrow = right_len + 1 if node.right and node.right.val == node.val else 0
+
+        # Path through this node (both directions)
+        longest[0] = max(longest[0], left_arrow + right_arrow)
+
+        # Return longest single direction to parent
+        return max(left_arrow, right_arrow)
+
+    dfs(root)
+    return longest[0]
 ```
 
 ---
 
 ## Common Variations
 
-1. **Diameter / longest path** — return height, track diameter globally
-2. **Maximum path sum** — same pattern, with `max(0, child)` trick
-3. **House Robber on tree** — return tuple (take, skip)
-4. **Longest path with same value** — track matching values
-5. **Count good nodes** — pass max-so-far down (preorder + postorder mix)
+1. **Diameter / longest path** -- return height, track diameter globally
+2. **Maximum path sum** -- same pattern, with `max(0, child)` trick
+3. **House Robber III** -- return tuple (take, skip) for each node
+4. **Longest univalue path** -- diameter variant where values must match
+5. **Binary tree cameras** -- return tuple (covered, has_camera, not_covered)
+6. **Count good nodes** -- track max value from root to current node (preorder variant)
+
+---
+
+## Step-by-Step Guide to Solving Any Tree DP Problem
+
+1. **Identify what info you need from children.** (Height? Sum? Count? Multiple values?)
+2. **Define the base case.** (What does an empty tree return?)
+3. **Define what to return to the parent.** (Usually: best option going through ONE child.)
+4. **Define the global update.** (Usually: best option going through BOTH children.)
+5. **Trace through a tree with 5-7 nodes.** (Verify your logic before coding.)
 
 ---
 
 ## Top 5 Mistakes Beginners Make
 
-1. **Confusing what to return vs what to track globally** — return = info for parent, global = actual answer
-2. **Forgetting the base case** — always handle `None` nodes
-3. **Not considering negative values** — use `max(0, child)` when negatives can hurt
-4. **Returning both subtrees to parent** — parent can only extend ONE path
-5. **Using preorder when postorder is needed** — tree DP needs children's results first
+1. **Confusing the global answer with the return value** -- The function returns info for the PARENT. The global variable tracks the OVERALL BEST. They serve different purposes.
+2. **Forgetting to consider negative values** -- In max path sum, use `max(child_result, 0)` to optionally skip a subtree with negative contribution.
+3. **Not returning the right thing** -- If the parent needs height, return height (not diameter). If the parent needs gain, return gain (not path sum).
+4. **Using `global` instead of `nonlocal` or a list** -- In Python, use `nonlocal` or a mutable container like `[0]` to modify outer variables in nested functions.
+5. **Not tracing through an example** -- Tree DP is hard to reason about abstractly. ALWAYS trace through a small tree before coding.
 
 ---
 
 ## Complexity
 
-- **Time:** O(n) — visit each node exactly once
-- **Space:** O(h) — recursion stack, where h = height of tree
-  - Balanced tree: O(log n)
-  - Skewed tree: O(n)
+| Problem | Time | Space |
+|---------|------|-------|
+| Diameter | O(n) | O(h) |
+| Max path sum | O(n) | O(h) |
+| House Robber III | O(n) | O(h) |
+| Longest univalue path | O(n) | O(h) |
+
+All Tree DP problems visit each node exactly once = O(n) time.
+Space is O(h) for the recursion stack, where h = height of tree.
+- Balanced tree: O(log n)
+- Skewed tree: O(n)
 
 ---
 
-## What To Say In Interview (Talk Track)
+## What To Say In Interview
 
-> "This is a tree DP problem. At each node, I need to combine results from left and right subtrees."
-> "I'll use postorder DFS — process children first, then the current node."
-> "I'll track the global answer separately because the path through a node uses both subtrees, but I can only return one direction to the parent."
-> "Time is O(n), space is O(h) for the recursion stack."
+> "This is a Tree DP problem. At each node, I need to combine information
+> from the left and right subtrees. I will use a postorder DFS where
+> each call returns the subtree information upward to its parent."
 
----
+> "The key insight is that the answer I track globally and the value I
+> return to the parent are different things. The global answer can use
+> both children, but the return value can only include one path direction
+> since a valid path cannot fork."
 
-## What's Next?
+> "For the diameter, my function returns the HEIGHT of each subtree.
+> At each node, I update the global diameter as left_height + right_height.
+> This is O(n) time and O(h) space."
 
-Go to: [08_common_tree_interview_tricks.md](08_common_tree_interview_tricks.md)
+> "Let me trace through this small example to verify my recurrence before
+> coding it up."
